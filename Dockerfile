@@ -13,6 +13,6 @@ RUN chmod +x gradlew
 
 RUN ./gradlew build
 
-EXPOSE 7070
+EXPOSE 8081
 
 CMD ["java", "-jar", "./app/build/libs/app.jar"]
