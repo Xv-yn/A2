@@ -8,5 +8,5 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - .:/app
+      - ./.docker-volumes/a2-app:/app
     container_name: vsas
