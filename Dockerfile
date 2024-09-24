@@ -1,13 +1,17 @@
 FROM openjdk:17-jdk-alpine
 
+RUN apk add --no-cache \
+    xvfb \
+    libxext-dev \
+    libxrender-dev \
+    libxtst-dev \
+    libxi-dev \
+    ttf-dejavu \
+    fontconfig
+
 WORKDIR /app
 
-COPY gradlew /app/gradlew
-COPY gradle /app/gradle
-COPY app/build.gradle /app/build.gradle
-COPY settings.gradle /app/settings.gradle
-
-COPY app /app/app
+COPY . .
 
 RUN chmod +x gradlew
 
@@ -15,4 +19,4 @@ RUN ./gradlew build
 
 EXPOSE 8081
 
-CMD ["java", "-jar", "./app/build/libs/app.jar"]
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 & export DISPLAY=:99 && ./gradlew run -Dprism.order=sw -Dprism.verbose=true -Djava.awt.headless=true -Dprism.forceGPU=false"]
